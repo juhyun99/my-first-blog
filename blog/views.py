@@ -4,6 +4,8 @@ from .models import Post
 from django.shortcuts import render, get_object_or_404
 from .forms import PostForm
 from django.shortcuts import redirect
+from rest_framework import viewsets
+from .serializers import PostSerializer
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -44,3 +46,7 @@ def post_edit(request, pk):
 
 def hw10(request):
     return render(request, 'hw10/2018102223임주현.html')
+
+class IntruderImage(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
